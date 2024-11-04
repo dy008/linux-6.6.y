@@ -86,6 +86,10 @@
 	};
 };
 
+&pmu_io_domains {
+	vccio3-supply = <&vcc_3v3>;
+};
+
 &sdhci {
 	bus-width = <8>;
 	max-frequency = <200000000>;
@@ -97,4 +101,12 @@
 	vmmc-supply = <&vcc_3v3>;
 	vqmmc-supply = <&vcc_1v8>;
 	status = "okay";
+};
+
+&rtl8125_1 {
+	label = "eth2";
+};
+
+&rtl8125_2 {
+	label = "eth3";
 };

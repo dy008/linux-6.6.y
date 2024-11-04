@@ -1446,10 +1446,6 @@ static bool vxlan_snoop(struct net_device *dev,
 	struct vxlan_fdb *f;
 	u32 ifindex = 0;
 
-	/* Don't learn broadcast packets */
-	if (is_multicast_ether_addr(src_mac) || is_zero_ether_addr(src_mac))
-		return false;
-
 	/* Ignore packets from invalid src-address */
 	if (!is_valid_ether_addr(src_mac))
 		return true;
@@ -4823,9 +4819,13 @@ static int __init vxlan_init_module(void)
 	if (rc)
 		goto out4;
 
-	vxlan_vnifilter_init();
+	rc = vxlan_vnifilter_init();
+	if (rc)
+		goto out5;
 
 	return 0;
+out5:
+	rtnl_link_unregister(&vxlan_link_ops);
 out4:
 	unregister_switchdev_notifier(&vxlan_switchdev_notifier_block);
 out3:

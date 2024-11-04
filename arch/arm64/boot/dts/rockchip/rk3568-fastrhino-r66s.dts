@@ -11,6 +11,10 @@
 	};
 };
 
+&pmu_io_domains {
+	vccio3-supply = <&vccio_sd>;
+};
+
 &sdmmc0 {
 	bus-width = <4>;
 	cap-mmc-highspeed;
@@ -24,4 +28,12 @@
 	vmmc-supply = <&vcc3v3_sd>;
 	vqmmc-supply = <&vccio_sd>;
 	status = "okay";
+};
+
+&rtl8125_1 {
+	label = "eth0";
+};
+
+&rtl8125_2 {
+	label = "eth1";
 };

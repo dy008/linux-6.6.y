@@ -260,6 +260,21 @@
 			  "", "", "", "";
 };
 
+&gmac0 {
+	clock_in_out = "output";
+	phy-handle = <&rgmii_phy>;
+	phy-mode = "rgmii-rxid";
+	pinctrl-0 = <&gmac0_miim
+		     &gmac0_tx_bus2
+		     &gmac0_rx_bus2
+		     &gmac0_rgmii_clk
+		     &gmac0_rgmii_bus>;
+	pinctrl-names = "default";
+	rx_delay = <0x00>;
+	tx_delay = <0x43>;
+	status = "okay";
+};
+
 &i2c0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&i2c0m2_xfer>;
@@ -405,7 +420,17 @@
 			rockchip,pins = <4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
 		};
 	};
-};
+
+	rtl8111 {
+
+			rtl8111-isolate {
+				rockchip,pins = <0x00 0x17 0x00 0x168>;
+			};
+
+			rtl8111-poweren {
+				rockchip,pins = <0x00 0x0f 0x00 0x162>;
+			};
+	};
 
 &pwm1 {
 	pinctrl-0 = <&pwm1m1_pins>;

@@ -431,6 +431,7 @@
 				rockchip,pins = <0x00 0x0f 0x00 0x162>;
 			};
 	};
+};
 
 &pwm1 {
 	pinctrl-0 = <&pwm1m1_pins>;

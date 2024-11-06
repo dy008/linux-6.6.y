@@ -17,8 +17,10 @@
 	compatible = "sro,smart-am60", "rockchip,rk3588";
 
 	aliases {
+		ethernet0 = &gmac0;
 		mmc0 = &sdhci;
 		mmc1 = &sdmmc;
+		serial2 = &uart2;
 	};
 
 	chosen {
@@ -29,7 +31,7 @@
 		compatible = "gpio-leds";
 
 		sys_led: led-0 {
-			// blue led: gpios = <0x183 0x04 0x00>;
+			// green led: gpios = <0x183 0x04 0x00>;
 			gpios = <&gpio1 RK_PA4 GPIO_ACTIVE_HIGH>;
 			label = "system-led";
 			linux,default-trigger = "heartbeat";
@@ -66,17 +68,6 @@
 		vin-supply = <&vcc12v_dcin>;
 	};
 
-	/* vcc4v0_sys powers the RK806, RK860's */
-	vcc4v0_sys: vcc4v0-sys-regulator {
-		compatible = "regulator-fixed";
-		regulator-name = "vcc4v0_sys";
-		regulator-always-on;
-		regulator-boot-on;
-		regulator-min-microvolt = <4000000>;
-		regulator-max-microvolt = <4000000>;
-		vin-supply = <&vcc12v_dcin>;
-	};
-
 	vcc_1v1_nldo_s3: vcc-1v1-nldo-s3-regulator {
 		compatible = "regulator-fixed";
 		regulator-name = "vcc-1v1-nldo-s3";
@@ -84,7 +75,7 @@
 		regulator-boot-on;
 		regulator-min-microvolt = <1100000>;
 		regulator-max-microvolt = <1100000>;
-		vin-supply = <&vcc4v0_sys>;
+		vin-supply = <&vcc5v0_sys>;
 	};
 
 	vcc_3v3_pcie20: vcc3v3-pcie20-regulator {
@@ -284,7 +275,7 @@
 		regulator-min-microvolt = <550000>;
 		regulator-max-microvolt = <1050000>;
 		regulator-ramp-delay = <2300>;
-		vin-supply = <&vcc4v0_sys>;
+		vin-supply = <&vcc5v0_sys>;
 
 		regulator-state-mem {
 			regulator-off-in-suspend;
@@ -301,7 +292,7 @@
 		regulator-min-microvolt = <550000>;
 		regulator-max-microvolt = <1050000>;
 		regulator-ramp-delay = <2300>;
-		vin-supply = <&vcc4v0_sys>;
+		vin-supply = <&vcc5v0_sys>;
 
 		regulator-state-mem {
 			regulator-off-in-suspend;
@@ -322,7 +313,7 @@
 		regulator-min-microvolt = <550000>;
 		regulator-max-microvolt = <950000>;
 		regulator-ramp-delay = <2300>;
-		vin-supply = <&vcc4v0_sys>;
+		vin-supply = <&vcc5v0_sys>;
 
 		regulator-state-mem {
 			regulator-off-in-suspend;
@@ -472,21 +463,21 @@
 
 		system-power-controller;
 
-		vcc1-supply = <&vcc4v0_sys>;
-		vcc2-supply = <&vcc4v0_sys>;
-		vcc3-supply = <&vcc4v0_sys>;
-		vcc4-supply = <&vcc4v0_sys>;
-		vcc5-supply = <&vcc4v0_sys>;
-		vcc6-supply = <&vcc4v0_sys>;
-		vcc7-supply = <&vcc4v0_sys>;
-		vcc8-supply = <&vcc4v0_sys>;
-		vcc9-supply = <&vcc4v0_sys>;
-		vcc10-supply = <&vcc4v0_sys>;
+		vcc1-supply = <&vcc5v0_sys>;
+		vcc2-supply = <&vcc5v0_sys>;
+		vcc3-supply = <&vcc5v0_sys>;
+		vcc4-supply = <&vcc5v0_sys>;
+		vcc5-supply = <&vcc5v0_sys>;
+		vcc6-supply = <&vcc5v0_sys>;
+		vcc7-supply = <&vcc5v0_sys>;
+		vcc8-supply = <&vcc5v0_sys>;
+		vcc9-supply = <&vcc5v0_sys>;
+		vcc10-supply = <&vcc5v0_sys>;
 		vcc11-supply = <&vcc_2v0_pldo_s3>;
-		vcc12-supply = <&vcc4v0_sys>;
+		vcc12-supply = <&vcc5v0_sys>;
 		vcc13-supply = <&vcc_1v1_nldo_s3>;
 		vcc14-supply = <&vcc_1v1_nldo_s3>;
-		vcca-supply = <&vcc4v0_sys>;
+		vcca-supply = <&vcc5v0_sys>;
 
 		gpio-controller;
 		#gpio-cells = <2>;

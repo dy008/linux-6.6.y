@@ -269,6 +269,7 @@
 
 	vdd_cpu_big0_s0: regulator@42 {
 		compatible = "rockchip,rk8602";
+		regulator-compatible = "rk860x-reg";
 		reg = <0x42>;
 		fcs,suspend-voltage-selector = <1>;
 		regulator-name = "vdd_cpu_big0_s0";
@@ -285,7 +286,8 @@
 	};
 
 	vdd_cpu_big1_s0: regulator@43 {
-		compatible = "rockchip,rk8603", "rockchip,rk8602";
+		compatible = "rockchip,rk8603";
+		regulator-compatible = "rk860x-reg";
 		reg = <0x43>;
 		fcs,suspend-voltage-selector = <1>;
 		regulator-name = "vdd_cpu_big1_s0";
@@ -301,173 +303,6 @@
 		};
 	};
 };	// ok
-
-&i2c1 {
-	status = "okay";
-
-	vdd_npu_s0: regulator@42 {
-		compatible = "rockchip,rk8602";
-		reg = <0x42>;
-		rockchip,suspend-voltage-selector = <1>;
-		regulator-name = "vdd_npu_s0";
-		regulator-always-on;
-		regulator-boot-on;
-		regulator-min-microvolt = <550000>;
-		regulator-max-microvolt = <950000>;
-		regulator-ramp-delay = <2300>;
-		vin-supply = <&vcc5v0_sys>;
-
-		regulator-state-mem {
-			regulator-off-in-suspend;
-		};
-	};
-};	// ok
-
-&i2c5 {
-	clock-frequency = <200000>;
-	status = "okay";
-
-	bl5372: rtc@32 {
-		compatible = "rtc,bl5372";
-		reg = <0x32>;
-		#clock-cells = <0>;
-		clock-output-names = "hym8563";
-		pinctrl-names = "default";
-		pinctrl-0 = <&bl5372_int>;
-		interrupt-parent = <&gpio0>;
-		interrupts = <RK_PC4 IRQ_TYPE_LEVEL_LOW>;
-		wakeup-source;
-	};
-};	// ok
-
-&i2s0_8ch {
-	pinctrl-names = "default";
-	pinctrl-0 = <&i2s0_lrck
-		     &i2s0_mclk
-		     &i2s0_sclk
-		     &i2s0_sdi0
-		     &i2s0_sdo0>;
-	status = "okay";
-};
-
-&pcie2x1l0 {
-	// reset-gpios = <0x18a 0x09 0x00>;
-	reset-gpios = <&gpio2 RK_PB1 GPIO_ACTIVE_HIGH>;
-	vpcie3v3-supply = <&vcc3v3_pcie2x1l0>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pcie2_0_rst>;
-	status = "okay";
-};	// ok
-
-
-&pcie2x1l2 {
-	// reset-gpios = <0xee 0x05 0x00>;
-	reset-gpios = <&gpio3 RK_PA5 GPIO_ACTIVE_HIGH>;
-	vpcie3v3-supply = <&vcc3v3_pcie2x1l2>;
-	pinctrl-names = "default";
-	pinctrl-0 = <&pcie2_2_rst>;
-	status = "okay";
-};	// ok
-
-&pinctrl {
-	gpio-leds {
-		sys_led_pin: sys-led-pin {
-			rockchip,pins = <1 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		usr_led_pin: usr-led-pin {
-			rockchip,pins = <0 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-
-	headphone {
-		hp_detect: hp-detect {
-			rockchip,pins = <1 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-
-	usb-typec {
-
-			usbc0-int {
-				rockchip,pins = <0x04 0x0d 0x00 0x168>;
-			};
-
-			typec5v-pwren {
-				rockchip,pins = <0x04 0x0e 0x00 0x162>;
-			};
-	};
-
-	bl5372 {
-		bl5372_int: bl5372-int {
-			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>;
-		};
-	};
-
-	pcie {
-		pcie2_0_rst: pcie2-0-rst {
-			rockchip,pins = <2 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-		pcie2_2_rst: pcie2-2-rst {
-			rockchip,pins = <3 RK_PA5 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-	};
-
-	pcie_m2_1_pwren: pcie-m21-pwren {
-			rockchip,pins = <0 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-	pcie_m2_2_pwren: pcie-m22-pwren {
-			rockchip,pins = <2 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-
-	usb {
-		typec5v_pwren: typec5v-pwren {
-			rockchip,pins = <4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
-		};
-	};
-
-	rtl8111 {
-
-			rtl8111-isolate {
-				rockchip,pins = <0x00 0x17 0x00 0x168>;
-			};
-
-			rtl8111-poweren {
-				rockchip,pins = <0x00 0x0f 0x00 0x162>;
-			};
-	};
-};
-
-&pwm1 {
-	pinctrl-0 = <&pwm1m1_pins>;
-	status = "okay";
-};
-
-&saradc {
-	vref-supply = <&avcc_1v8_s0>;
-	status = "okay";
-};
-
-&sdhci {
-	bus-width = <8>;
-	no-sdio;
-	no-sd;
-	non-removable;
-	max-frequency = <200000000>;
-	mmc-hs400-1_8v;
-	mmc-hs400-enhanced-strobe;
-	status = "okay";
-};
-
-&sdmmc {
-	status = "disabled";
-};
-
-&sdio {
-	status = "disabled";
-};
 
 &spi2 {
 	status = "okay";
@@ -797,6 +632,174 @@
 		};
 	};
 };	// ok
+
+&i2c1 {
+	status = "okay";
+
+	vdd_npu_s0: regulator@42 {
+		compatible = "rockchip,rk8602";
+		regulator-compatible = "rk860x-reg";
+		reg = <0x42>;
+		rockchip,suspend-voltage-selector = <1>;
+		regulator-name = "vdd_npu_s0";
+		regulator-always-on;
+		regulator-boot-on;
+		regulator-min-microvolt = <550000>;
+		regulator-max-microvolt = <950000>;
+		regulator-ramp-delay = <2300>;
+		vin-supply = <&vcc5v0_sys>;
+
+		regulator-state-mem {
+			regulator-off-in-suspend;
+		};
+	};
+};	// ok
+
+&i2c5 {
+	clock-frequency = <200000>;
+	status = "okay";
+
+	bl5372: rtc@32 {
+		compatible = "rtc,bl5372";
+		reg = <0x32>;
+		#clock-cells = <0>;
+		clock-output-names = "hym8563";
+		pinctrl-names = "default";
+		pinctrl-0 = <&bl5372_int>;
+		interrupt-parent = <&gpio0>;
+		interrupts = <RK_PC4 IRQ_TYPE_LEVEL_LOW>;
+		wakeup-source;
+	};
+};	// ok
+
+&i2s0_8ch {
+	pinctrl-names = "default";
+	pinctrl-0 = <&i2s0_lrck
+		     &i2s0_mclk
+		     &i2s0_sclk
+		     &i2s0_sdi0
+		     &i2s0_sdo0>;
+	status = "okay";
+};
+
+&pcie2x1l0 {
+	// reset-gpios = <0x18a 0x09 0x00>;
+	reset-gpios = <&gpio2 RK_PB1 GPIO_ACTIVE_HIGH>;
+	vpcie3v3-supply = <&vcc3v3_pcie2x1l0>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pcie2_0_rst>;
+	status = "okay";
+};	// ok
+
+
+&pcie2x1l2 {
+	// reset-gpios = <0xee 0x05 0x00>;
+	reset-gpios = <&gpio3 RK_PA5 GPIO_ACTIVE_HIGH>;
+	vpcie3v3-supply = <&vcc3v3_pcie2x1l2>;
+	pinctrl-names = "default";
+	pinctrl-0 = <&pcie2_2_rst>;
+	status = "okay";
+};	// ok
+
+&pinctrl {
+	gpio-leds {
+		sys_led_pin: sys-led-pin {
+			rockchip,pins = <1 RK_PA4 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		usr_led_pin: usr-led-pin {
+			rockchip,pins = <0 RK_PC3 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	headphone {
+		hp_detect: hp-detect {
+			rockchip,pins = <1 RK_PC4 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	usb-typec {
+
+			usbc0-int {
+				rockchip,pins = <0x04 0x0d 0x00 0x168>;
+			};
+
+			typec5v-pwren {
+				rockchip,pins = <0x04 0x0e 0x00 0x162>;
+			};
+	};
+
+	bl5372 {
+		bl5372_int: bl5372-int {
+			rockchip,pins = <0 RK_PC4 RK_FUNC_GPIO &pcfg_pull_up>;
+		};
+	};
+
+	pcie {
+		pcie2_0_rst: pcie2-0-rst {
+			rockchip,pins = <2 RK_PB1 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+		pcie2_2_rst: pcie2-2-rst {
+			rockchip,pins = <3 RK_PA5 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+	};
+
+	pcie_m2_1_pwren: pcie-m21-pwren {
+			rockchip,pins = <0 RK_PB7 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+	pcie_m2_2_pwren: pcie-m22-pwren {
+			rockchip,pins = <2 RK_PB0 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+
+	usb {
+		typec5v_pwren: typec5v-pwren {
+			rockchip,pins = <4 RK_PB6 RK_FUNC_GPIO &pcfg_pull_none>;
+		};
+	};
+
+	rtl8111 {
+
+			rtl8111-isolate {
+				rockchip,pins = <0x00 0x17 0x00 0x168>;
+			};
+
+			rtl8111-poweren {
+				rockchip,pins = <0x00 0x0f 0x00 0x162>;
+			};
+	};
+};
+
+&pwm1 {
+	pinctrl-0 = <&pwm1m1_pins>;
+	status = "okay";
+};
+
+&saradc {
+	vref-supply = <&avcc_1v8_s0>;
+	status = "okay";
+};
+
+&sdhci {
+	bus-width = <8>;
+	no-sdio;
+	no-sd;
+	non-removable;
+	max-frequency = <200000000>;
+	mmc-hs400-1_8v;
+	mmc-hs400-enhanced-strobe;
+	status = "okay";
+};
+
+&sdmmc {
+	status = "disabled";
+};
+
+&sdio {
+	status = "disabled";
+};
 
 &tsadc {
 	status = "okay";

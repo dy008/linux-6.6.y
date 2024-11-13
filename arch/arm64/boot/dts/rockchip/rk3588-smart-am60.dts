@@ -671,7 +671,7 @@
         pinctrl-0 = <&usbc0_int>;
         vbus-supply = <&vbus5v0_typec>;
         status = "okay";
-
+/*
         ports {
             #address-cells = <1>;
             #size-cells = <0>;
@@ -683,7 +683,7 @@
                 };
             };
         };
-
+*/
         usb_con: connector {
             compatible = "usb-c-connector";
             label = "USB-C";

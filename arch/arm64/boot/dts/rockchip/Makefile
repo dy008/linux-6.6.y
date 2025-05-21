@@ -147,6 +147,7 @@ dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-swan1-w28.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-watermelon-pi.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3568-watermelon-pi-v3.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-coolpi-cm5-evb.dtb
+dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-dw220.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-edgeble-neu6a-io.dtb
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-edgeble-neu6a-wifi.dtbo
 dtb-$(CONFIG_ARCH_ROCKCHIP) += rk3588-edgeble-neu6b-io.dtb
